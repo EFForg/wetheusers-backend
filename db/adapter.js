@@ -6,6 +6,7 @@ var lodash = require('lodash');
 var redis = require('redis');
 var url = require('url');
 var kue = require('kue')
+var Step = require('step');
 
 var redisConfig = require('config').get('REDIS');
 var dbUtils = require('./utils');
@@ -54,14 +55,19 @@ var RedisAdapter = function() {
  * @param failure
  */
 RedisAdapter.prototype.saveSignature = function(signature, success, failure) {
+  var adapter = this;
   var emailHash = dbUtils.hashEmail(signature.email);
 
-  this.client_.set(emailHash, JSON.stringify(signature), function(err, reply) {
-    if (err) {
-      failure(err);
-    } else {
-      success();
-    }
+  Step(function(){
+
+    adapter.client_.set(emailHash, JSON.stringify(signature), this.parallel());
+    adapter.jobQueue.create('sign', {
+      signature: signature
+    }).save(this.parallel());
+
+  }, function(err){
+    if(err) return failure(err);
+    success();
   });
 };
 

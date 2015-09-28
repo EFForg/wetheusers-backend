@@ -32,6 +32,7 @@
     "lodash": "^2.4.1",
     "redis": "^0.12.1",
     "request": "^2.47.0",
+    "step": "0.0.6",
     "wethepeople": "^0.1.0"
   },
   "devDependencies": {
