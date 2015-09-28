@@ -33,7 +33,7 @@
     "redis": "^0.12.1",
     "request": "^2.47.0",
     "step": "0.0.6",
-    "wethepeople": "^0.1.0"
+    "wethepeople-wrapper": "^0.1.0"
   },
   "devDependencies": {
     "gulp": "^3.8.10",

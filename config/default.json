@@ -18,6 +18,7 @@
     "API_KEY": "",
     "API_URL": "",
     "RATE_LIMIT": 1000,
+    "MAXIMUM_CONCURRENCY": 20,
     "WHITELIST_PETITIONS": true
   },
 

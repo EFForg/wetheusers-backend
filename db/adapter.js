@@ -9,7 +9,9 @@ var kue = require('kue')
 var Step = require('step');
 
 var redisConfig = require('config').get('REDIS');
+var wtpConfig = require('config').get('WE_THE_PEOPLE');
 var dbUtils = require('./utils');
+var wtp = require('../lib/wethepeople.js');
 
 
 var RedisAdapter = function() {
@@ -43,6 +45,31 @@ var RedisAdapter = function() {
    */
   this.jobQueue = kue.createQueue({
     redis: { port: port, host: hostname }
+  });
+
+  this.jobQueue.process('sign', wtpConfig.get('MAXIMUM_CONCURRENCY'),
+    function(job, done){
+      // send the job off to We The People and mark as sent if successful
+      wtp.sign(
+        job.data.signature.petitionId,
+        job.data.signature.firstName,
+        job.data.signature.lastName,
+        job.data.signature.email,
+        function(err){
+          if(err) return done(err);
+          job.data.signature.sentToWhiteHouse = true;
+          job.save();
+          done();
+        }
+      );
+    }
+  );
+
+  this.jobQueue.on('job complete', function(id, result){
+    kue.Job.get(id, function(err, job){
+      if(err) return;
+      job.remove();
+    })
   });
 };
 
