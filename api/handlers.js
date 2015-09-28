@@ -17,7 +17,6 @@ var addSignature = function(request, reply) {
 
   var newSignature = request.payload;
   newSignature.sentToWhiteHouse = false;
-  newSignature.isValidated = false;
 
   var success = function() {
     reply({status: 'success'});
