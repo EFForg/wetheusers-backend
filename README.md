@@ -13,6 +13,15 @@ gulp runServer
 
 The server should now be running at 127.0.0.1:3200 by default
 
+## With Docker
+
+First, modify the config files in config/ to your liking. Then:
+
+```
+docker run --name wetheusers-redis -d redis
+docker run --name wetheusers-app -p 3200:3200 -it --link wetheusers-redis:redis --rm -v $(pwd)/config:/app/config hainish/wetheusers-backend
+```
+
 ### Configuration
 
 App configuration is controlled using the [node-config module](https://github.com/lorenwest/node-config)
