@@ -1,4 +1,8 @@
 {
+  "REDIS": {
+    "PORT": 6379,
+    "URL": "127.0.0.1"
+  },
 
   "WE_THE_PEOPLE": {
     "API_KEY": "",

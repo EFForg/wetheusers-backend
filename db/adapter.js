@@ -19,15 +19,8 @@ var RedisAdapter = function() {
     max_attempts: redisConfig.get('MAX_ATTEMPTS')
   };
 
-  var port, hostname;
-  if (process.env.NODE_ENV === 'production') {
-    var redisURI = url.parse(redisConfig.get('REDIS_URI'));
-    port = redisURI.port;
-    hostname = redisURI.hostname;
-  } else {
-    port = redisConfig.get('PORT');
-    hostname = redisConfig.get('URL');
-  }
+  var port = redisConfig.get('PORT');
+  var hostname = redisConfig.get('URL');
 
 
   // TODO(leah): per https://github.com/mranney/node_redis/issues/226 connection pooling shouldn't

@@ -23,10 +23,7 @@
   },
 
   "REDIS": {
-    "PORT": 6379,
-    "URL": "127.0.0.1",
-    "MAX_ATTEMPTS": 5,
-    "REDIS_URI": ""
+    "MAX_ATTEMPTS": 5
   }
 
 }
